@@ -3,7 +3,7 @@
 let userAnswers = JSON.parse(sessionStorage.getItem('progress')) || [];
 let score = JSON.parse(localStorage.getItem('score')) || 0;
 
-updateScore();
+// updateScore();
 
 const questionsElement = document.getElementById("questions");
 
