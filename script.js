@@ -1,5 +1,29 @@
 //your JS code here.
 
+let userAnswers = JSON.parse(sessionStorage.getItem('progress')) || [];
+let score = JSON.parse(localStorage.getItem('score')) || 0;
+
+updateScore();
+
+const questionsElement = document.getElementById("questions");
+
+document.getElementById('submit').addEventListener("click", submitQuiz);
+
+function submitQuiz() {
+  score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (userAnswers[i] === questions[i].answer) {
+      score++;
+      localStorage.setItem('score', `${score}`);
+    }
+  }
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById("score").textContent = `Your score is ${score} out of 5.`;
+}
+
 // Do not change code below this line
 // This code will just display the questions to the screen
 const questions = [
@@ -46,6 +70,12 @@ function renderQuestions() {
       if (userAnswers[i] === choice) {
         choiceElement.setAttribute("checked", true);
       }
+
+		choiceElement.addEventListener('change', function () {
+        userAnswers[i] = this.value;
+        sessionStorage.setItem('progress', JSON.stringify(userAnswers))
+      })
+		
       const choiceText = document.createTextNode(choice);
       questionElement.appendChild(choiceElement);
       questionElement.appendChild(choiceText);
